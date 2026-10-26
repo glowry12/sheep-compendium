@@ -13,3 +13,21 @@ def test_read_sheep():
         "breed": "Gotland",
         "sex": "ewe"
     }
+
+def test_add_sheep():
+    new_sheep_data = {
+        "id": 7,
+        "name": "Suffolk",
+        "breed": "Suffolk",
+        "sex": "ewe"
+    }
+
+    response = client.post("/sheep/", json=new_sheep_data)
+
+    assert response.status_code == 201
+
+    assert response.json() == new_sheep_data
+
+    get_response = client.get("/sheep/7")
+    assert get_response.status_code == 200
+    assert get_response.json() == new_sheep_data
